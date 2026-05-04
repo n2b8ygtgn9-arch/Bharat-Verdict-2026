@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bharat Verdict 2026 — Live State Election Monitor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #161310;
+    --paper: #f4ede1;
+    --paper-2: #ebe2d2;
+    --rule: #2a241d;
+    --saffron: #d96a2a;
+    --saffron-deep: #b8521e;
+    --saffron-glow: #f08a3d;
+    --india-green: #1f6b3f;
+    --india-green-deep: #134628;
+    --ashoka: #1a3a8a;
+    --crimson: #8e1c2c;
+    --gold: #b8862a;
+    --slate: #4a4338;
+    --muted: #7a6f5f;
+    --hairline: rgba(22, 19, 16, 0.14);
+    --bjp: #ff6a13;
+    --inc: #19aaed;
+    --tmc: #2c7a3e;
+    --dmk: #d22030;
+    --aiadmk: #0a8d4c;
+    --tvk: #a91d24;
+    --ldf: #b8231f;
+    --udf: #1e88e5;
+    --ainrc: #f5a623;
+    --bopf: #6a3d8c;
+    --agp: #c98e1b;
+    --other: #8a7e6e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Manrope', sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+
+  /* paper grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 23% 17%, rgba(184, 82, 30, 0.04) 0, transparent 35%),
+      radial-gradient(circle at 78% 64%, rgba(31, 107, 63, 0.04) 0, transparent 40%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.6;
+  }
+
+  .container { max-width: 1320px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 2; }
+
+  /* ========== MASTHEAD ========== */
+  .masthead {
+    border-bottom: 3px double var(--rule);
+    padding: 18px 0 14px;
+    background: linear-gradient(180deg, transparent 0%, rgba(217, 106, 42, 0.03) 100%);
+  }
+  .masthead-top {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--slate);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .masthead-top .live-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--crimson); color: #fffbe9;
+    padding: 4px 10px; border-radius: 2px;
+    font-weight: 700;
+  }
+  .live-pill::before {
+    content: ''; width: 7px; height: 7px; border-radius: 50%;
+    background: #fffbe9;
+    animation: blink 1.2s infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  .masthead-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    margin: 14px 0 6px;
+    text-align: center;
+    color: var(--ink);
+    font-variation-settings: "opsz" 144;
+  }
+  .masthead-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--saffron-deep);
+  }
+  .masthead-sub {
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 17px;
+    color: var(--slate);
+    letter-spacing: 0.01em;
+    margin-bottom: 8px;
+  }
+  .tricolor-rule {
+    height: 4px;
+    background: linear-gradient(90deg,
+      var(--saffron) 0%, var(--saffron) 33.33%,
+      #f4ede1 33.33%, #f4ede1 50%,
+      #1a3a8a 49%, #1a3a8a 51%,
+      #f4ede1 50%, #f4ede1 66.66%,
+      var(--india-green) 66.66%, var(--india-green) 100%);
+    margin-top: 6px;
+    position: relative;
+  }
+  .tricolor-rule::after {
+    content: '';
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1.5px solid var(--ashoka);
+    box-shadow: inset 0 0 0 2px var(--paper);
+  }
+
+  /* ========== TICKER ========== */
+  .ticker {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 11px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 28px;
+  }
+  .ticker-track {
+    display: flex; gap: 48px;
+    white-space: nowrap;
+    animation: scroll-ticker 80s linear infinite;
+  }
+  .ticker-item { display: inline-flex; align-items: center; gap: 10px; }
+  .ticker-item .tag {
+    background: var(--saffron);
+    color: var(--ink);
+    padding: 2px 7px;
+    font-weight: 700;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+  .ticker-item .tag.green { background: var(--india-green); color: var(--paper); }
+  .ticker-item .tag.blue { background: var(--ashoka); color: var(--paper); }
+  .ticker-item .tag.red { background: var(--crimson); color: var(--paper); }
+  @keyframes scroll-ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ========== HEADLINE GRID ========== */
+  .headline-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 36px;
+  }
+  .headline-card {
+    padding: 22px 24px;
+    border-right: 1px solid var(--hairline);
+    position: relative;
+  }
+  .headline-card:last-child { border-right: none; }
+  .headline-card.hero {
+    background: linear-gradient(135deg, rgba(217, 106, 42, 0.08) 0%, transparent 70%);
+  }
+  .headline-card .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--saffron-deep);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .headline-card h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 1.08;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .headline-card.hero h2 { font-size: 34px; }
+  .headline-card p {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    color: var(--slate);
+    line-height: 1.5;
+  }
+  .byline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+
+  /* ========== SECTION HEADERS ========== */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin: 48px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--rule);
+  }
+  .section-head h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .section-head h3 .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--saffron-deep);
+    margin-right: 12px;
+    vertical-align: middle;
+    font-weight: 500;
+  }
+  .section-head .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ========== STATE NAVIGATION ========== */
+  .state-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--rule);
+    flex-wrap: wrap;
+  }
+  .state-tab {
+    flex: 1;
+    min-width: 140px;
+    background: transparent;
+    border: 1px solid var(--hairline);
+    border-bottom: none;
+    border-right: none;
+    padding: 16px 18px;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Manrope', sans-serif;
+    transition: all 0.25s ease;
+    position: relative;
+  }
+  .state-tab:last-child { border-right: 1px solid var(--hairline); }
+  .state-tab:hover { background: rgba(217, 106, 42, 0.06); }
+  .state-tab.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .state-tab .st-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: -0.01em;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .state-tab .st-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .state-tab.active .st-status { color: var(--saffron-glow); }
+  .state-tab.active::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -1px; right: 0;
+    height: 3px;
+    background: var(--saffron);
+  }
+
+  /* ========== STATE PANELS ========== */
+  .state-panel { display: none; }
+  .state-panel.active { display: block; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ========== PANEL HEADER ========== */
+  .panel-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: end;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .panel-header h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 56px;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    color: var(--ink);
+  }
+  .panel-header h2 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--saffron-deep);
+    display: block;
+    font-size: 22px;
+    letter-spacing: 0;
+    margin-top: 4px;
+  }
+  .panel-stats {
+    display: flex; gap: 28px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .panel-stat .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .panel-stat .value {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+
+  /* ========== MAIN GRID ========== */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 32px;
+    margin-bottom: 36px;
+  }
+  @media (max-width: 980px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .panel-header { grid-template-columns: 1fr; }
+    .panel-header h2 { font-size: 42px; }
+    .headline-grid { grid-template-columns: 1fr; }
+    .headline-card { border-right: none; border-bottom: 1px solid var(--hairline); }
+  }
+
+  /* ========== CHART CARDS ========== */
+  .chart-card {
+    background: var(--paper-2);
+    border: 1px solid var(--hairline);
+    padding: 24px;
+    position: relative;
+  }
+  .chart-card .corner {
+    position: absolute; top: 0; left: 0;
+    width: 24px; height: 24px;
+    border-top: 2px solid var(--saffron);
+    border-left: 2px solid var(--saffron);
+  }
+  .chart-card .corner.br {
+    top: auto; left: auto; bottom: 0; right: 0;
+    border-top: none; border-left: none;
+    border-bottom: 2px solid var(--saffron);
+    border-right: 2px solid var(--saffron);
+  }
+  .chart-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.015em;
+    margin-bottom: 4px;
+  }
+  .chart-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  /* ========== PIE / DONUT SVG ========== */
+  .pie-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    align-items: center;
+  }
+  .pie-svg-wrap { position: relative; }
+  .pie-svg { width: 100%; height: auto; display: block; }
+  .pie-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    text-align: center;
+  }
+  .pie-center .big {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+  }
+  .pie-center .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  .pie-center .winner {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--saffron-deep);
+    margin-top: 4px;
+  }
+
+  .pie-slice {
+    transition: transform 0.3s ease, filter 0.3s ease;
+    transform-origin: center;
+    cursor: pointer;
+  }
+  .pie-slice:hover {
+    transform: scale(1.04);
+    filter: brightness(1.1) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  }
+
+  .legend { display: flex; flex-direction: column; gap: 10px; }
+  .legend-row {
+    display: grid;
+    grid-template-columns: 14px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 1px dotted var(--hairline);
+    font-size: 13px;
+  }
+  .legend-row:last-child { border-bottom: none; }
+  .legend-swatch {
+    width: 14px; height: 14px;
+    border-radius: 2px;
+  }
+  .legend-name {
+    font-weight: 600;
+    font-family: 'Manrope', sans-serif;
+  }
+  .legend-seats {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  /* ========== MAJORITY METER ========== */
+  .majority-meter { margin-top: 18px; }
+  .majority-bar {
+    position: relative;
+    height: 36px;
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+    display: flex;
+    overflow: hidden;
+  }
+  .majority-bar .seg {
+    height: 100%;
+    transition: width 0.6s ease;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .majority-bar .seg span {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: 0.05em;
+  }
+  .halfway-marker {
+    position: absolute; left: 50%; top: -8px; bottom: -8px;
+    width: 2px;
+    background: var(--ink);
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+  .halfway-marker::after {
+    content: 'MAJORITY MARK';
+    position: absolute;
+    top: -16px; left: 50%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--ink);
+    white-space: nowrap;
+    background: var(--paper);
+    padding: 0 6px;
+    font-weight: 700;
+  }
+
+  /* ========== CONSTITUENCY GRID ========== */
+  .constituency-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14px, 1fr));
+    gap: 3px;
+    margin-top: 16px;
+    padding: 12px;
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+  }
+  .seat-cell {
+    aspect-ratio: 1;
+    border-radius: 1px;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+  }
+  .seat-cell:hover { transform: scale(1.6); z-index: 2; position: relative; }
+
+  /* ========== SWING ARROWS ========== */
+  .swing-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .swing-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 80px;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    background: var(--paper);
+    border-left: 3px solid var(--hairline);
+  }
+  .swing-row.up { border-left-color: var(--india-green); }
+  .swing-row.down { border-left-color: var(--crimson); }
+  .swing-party {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 17px;
+  }
+  .swing-bar-wrap { position: relative; height: 22px; }
+  .swing-bar-axis {
+    position: absolute; left: 50%; top: 0; bottom: 0;
+    width: 1px;
+    background: var(--rule);
+  }
+  .swing-bar {
+    position: absolute; top: 4px; bottom: 4px;
+    height: 14px;
+  }
+  .swing-bar.up {
+    left: 50%;
+    background: linear-gradient(90deg, var(--india-green) 0%, #3a9b5e 100%);
+  }
+  .swing-bar.down {
+    right: 50%;
+    background: linear-gradient(90deg, #c4344a 0%, var(--crimson) 100%);
+  }
+  .swing-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    text-align: right;
+  }
+  .swing-value.up { color: var(--india-green-deep); }
+  .swing-value.down { color: var(--crimson); }
+
+  /* ========== TWO-COL CONTENT ========== */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 32px;
+    margin-bottom: 36px;
+  }
+  @media (max-width: 980px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ========== LEADER REMARKS ========== */
+  .remarks-stack { display: flex; flex-direction: column; gap: 14px; }
+  .remark {
+    background: var(--paper-2);
+    border-left: 3px solid var(--saffron);
+    padding: 18px 20px;
+    position: relative;
+  }
+  .remark.tmc { border-left-color: var(--tmc); }
+  .remark.bjp { border-left-color: var(--bjp); }
+  .remark.inc { border-left-color: var(--inc); }
+  .remark.tvk { border-left-color: var(--tvk); }
+  .remark.dmk { border-left-color: var(--dmk); }
+  .remark.ldf { border-left-color: var(--ldf); }
+  .remark.aimim { border-left-color: var(--bopf); }
+
+  .remark .leader {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .remark .role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .remark .quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink);
+    position: relative;
+    padding-left: 18px;
+  }
+  .remark .quote::before {
+    content: '“';
+    position: absolute;
+    left: -2px; top: -10px;
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--saffron);
+    line-height: 1;
+    font-family: 'Fraunces', serif;
+  }
+  .remark .timestamp {
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  /* ========== ANALYSIS COLUMN ========== */
+  .analysis-card {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .analysis-card::before {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle at top right, var(--saffron) 0%, transparent 70%);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  .analysis-card .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--saffron-glow);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .analysis-card h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .analysis-card p {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(244, 237, 225, 0.85);
+    margin-bottom: 14px;
+  }
+  .analysis-card p strong {
+    color: var(--saffron-glow);
+    font-weight: 700;
+  }
+  .historical-table {
+    margin-top: 16px;
+    border-top: 1px solid rgba(244, 237, 225, 0.2);
+    padding-top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+  .historical-row {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px dotted rgba(244, 237, 225, 0.1);
+  }
+  .historical-row .yr { color: var(--saffron-glow); font-weight: 700; }
+  .historical-row .winner-h { color: var(--paper); font-weight: 600; font-family: 'Manrope', sans-serif; }
+  .historical-row .seats-h { color: rgba(244, 237, 225, 0.7); }
+
+  /* ========== HISTORICAL TIMELINE CHART ========== */
+  .timeline-chart { margin-top: 14px; }
+
+  /* ========== NEWS SECTION ========== */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .news-card {
+    background: var(--paper-2);
+    border: 1px solid var(--hairline);
+    padding: 18px 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .news-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0;
+    width: 4px; height: 100%;
+    background: var(--accent, var(--saffron));
+    transition: width 0.25s ease;
+  }
+  .news-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(22, 19, 16, 0.08); }
+  .news-card:hover::before { width: 8px; }
+  .news-channel {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    color: var(--accent, var(--ink));
+  }
+  .news-tagline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .news-headline {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--slate);
+    line-height: 1.4;
+    margin-top: 4px;
+  }
+  .news-link {
+    margin-top: auto;
+    padding-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--saffron-deep);
+    font-weight: 700;
+  }
+  .news-link::after { content: ' →'; }
+
+  /* ========== ECI BADGE ========== */
+  .eci-banner {
+    background: linear-gradient(135deg, var(--ashoka) 0%, #2c4ea0 100%);
+    color: var(--paper);
+    padding: 24px 28px;
+    margin-bottom: 36px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .eci-banner::before {
+    content: '';
+    position: absolute;
+    right: -40px; top: 50%;
+    transform: translateY(-50%);
+    width: 200px; height: 200px;
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+  }
+  .eci-banner::after {
+    content: '';
+    position: absolute;
+    right: 10px; top: 50%;
+    transform: translateY(-50%);
+    width: 100px; height: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+  }
+  .eci-seal {
+    width: 64px; height: 64px;
+    border: 2px solid var(--paper);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .eci-seal svg { width: 38px; height: 38px; }
+  .eci-text { z-index: 1; }
+  .eci-text .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--saffron-glow);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .eci-text h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+  .eci-text p {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13.5px;
+    color: rgba(244, 237, 225, 0.85);
+    margin-top: 4px;
+  }
+  .eci-cta {
+    background: var(--saffron);
+    color: var(--ink);
+    padding: 12px 22px;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 11.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    z-index: 1;
+    border: 2px solid var(--saffron);
+    white-space: nowrap;
+  }
+  .eci-cta:hover {
+    background: var(--paper);
+    border-color: var(--paper);
+  }
+
+  /* ========== FOOTER ========== */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 40px 0 28px;
+    margin-top: 60px;
+    border-top: 4px solid var(--saffron);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+  @media (max-width: 780px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  footer h5 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--saffron-glow);
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+  footer ul { list-style: none; }
+  footer li { padding: 4px 0; font-size: 13px; color: rgba(244, 237, 225, 0.75); }
+  footer li a { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+  footer li a:hover { color: var(--saffron-glow); }
+  .footer-brand {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .footer-brand em { color: var(--saffron-glow); font-style: italic; font-weight: 400; }
+  .footer-tagline {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(244, 237, 225, 0.7);
+    line-height: 1.5;
+  }
+  .footer-bottom {
+    border-top: 1px solid rgba(244, 237, 225, 0.15);
+    padding-top: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: rgba(244, 237, 225, 0.5);
+    text-align: center;
+  }
+
+  /* ========== TURNOUT MINI VIZ ========== */
+  .turnout-card {
+    margin-top: 20px;
+    padding: 18px;
+    background: var(--paper);
+    border: 1px solid var(--hairline);
+  }
+  .turnout-row {
+    display: grid;
+    grid-template-columns: 90px 1fr 60px;
+    gap: 12px;
+    align-items: center;
+    padding: 6px 0;
+  }
+  .turnout-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--slate);
+  }
+  .turnout-bar {
+    height: 8px;
+    background: var(--paper-2);
+    position: relative;
+    overflow: hidden;
+  }
+  .turnout-bar .fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--saffron-deep) 0%, var(--saffron) 100%);
+    transition: width 1s ease;
+  }
+  .turnout-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .floating-update {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: 0 8px 24px rgba(22, 19, 16, 0.25);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-left: 3px solid var(--saffron);
+  }
+  .floating-update .pulse {
+    width: 8px; height: 8px;
+    background: var(--saffron);
+    border-radius: 50%;
+    animation: pulse-anim 2s infinite;
+  }
+  @keyframes pulse-anim {
+    0% { box-shadow: 0 0 0 0 rgba(217, 106, 42, 0.7); }
+    70% { box-shadow: 0 0 0 12px rgba(217, 106, 42, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(217, 106, 42, 0); }
+  }
+
+  /* small responsive */
+  @media (max-width: 640px) {
+    .container { padding: 0 18px; }
+    .panel-header h2 { font-size: 36px; }
+    .pie-wrap { grid-template-columns: 1fr; }
+    .panel-stats { flex-wrap: wrap; gap: 16px; }
+    .floating-update { bottom: 12px; right: 12px; left: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================== MASTHEAD ============================== -->
+<div class="masthead">
+  <div class="container">
+    <div class="masthead-top">
+      <div>Vol. XXVI &middot; Issue 124 &middot; Counting Day Edition</div>
+      <div class="live-pill">LIVE COUNTING IN PROGRESS</div>
+      <div id="datetime">Monday, 4 May 2026</div>
+    </div>
+    <h1 class="masthead-title">Bharat <em>Verdict</em> 2026</h1>
+    <div class="masthead-sub">A live monitor of state assembly elections — counting trends, leader reactions, historical context</div>
+    <div class="tricolor-rule"></div>
+  </div>
+</div>
+
+<!-- ============================== TICKER ============================== -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="tag">WB</span> BJP crosses 169 in West Bengal — first majority in state's history</span>
+    <span class="ticker-item"><span class="tag green">TN</span> TVK leads with 105 seats — Vijay's debut political earthquake</span>
+    <span class="ticker-item"><span class="tag blue">KL</span> UDF ahead at 60, set to unseat ruling LDF</span>
+    <span class="ticker-item"><span class="tag red">AS</span> Himanta Biswa Sarma's BJP returns: 79 seats and counting</span>
+    <span class="ticker-item"><span class="tag">PY</span> AINRC-led NDA leads in 9 of 16 seats in Puducherry</span>
+    <span class="ticker-item"><span class="tag green">WB</span> Mamata Banerjee trails Suvendu Adhikari in early Bhabanipur rounds, regains lead by R3</span>
+    <span class="ticker-item"><span class="tag blue">TN</span> DMK reduced to 44 — Stalin faces toughest political challenge yet</span>
+    <!-- duplicated for infinite scroll -->
+    <span class="ticker-item"><span class="tag">WB</span> BJP crosses 169 in West Bengal — first majority in state's history</span>
+    <span class="ticker-item"><span class="tag green">TN</span> TVK leads with 105 seats — Vijay's debut political earthquake</span>
+    <span class="ticker-item"><span class="tag blue">KL</span> UDF ahead at 60, set to unseat ruling LDF</span>
+    <span class="ticker-item"><span class="tag red">AS</span> Himanta Biswa Sarma's BJP returns: 79 seats and counting</span>
+    <span class="ticker-item"><span class="tag">PY</span> AINRC-led NDA leads in 9 of 16 seats in Puducherry</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ============================== HEADLINES ============================== -->
+  <div class="headline-grid">
+    <div class="headline-card hero">
+      <div class="kicker">★ Lead Story</div>
+      <h2>Saffron Surprise in Bengal, Earthquake in Tamil Nadu</h2>
+      <p>Two of India's most fiercely contested states deliver verdicts that will reshape the national political map. The BJP has crossed the majority mark in West Bengal for the first time, while in Tamil Nadu, actor-politician Vijay's TVK has stunned the established Dravidian order in its electoral debut.</p>
+      <div class="byline">By the Bharat Verdict Desk &middot; 4 May 2026 &middot; 13:42 IST</div>
+    </div>
+    <div class="headline-card">
+      <div class="kicker">Kerala</div>
+      <h2>UDF's quiet comeback ends LDF's decade</h2>
+      <p>Congress-led front leads in 60 seats, halting the Pinarayi Vijayan government's historic third-term bid. CPI(M) trails distantly at 28.</p>
+      <div class="byline">Thiruvananthapuram Bureau</div>
+    </div>
+    <div class="headline-card">
+      <div class="kicker">Assam &middot; Puducherry</div>
+      <h2>NDA holds the Northeast, gains the South coast</h2>
+      <p>Sarma cruises in Assam with 79+ seats. Puducherry returns AINRC's N. Rangasamy, with the NDA leading in 12 of 16 seats including BJP allies.</p>
+      <div class="byline">Guwahati &middot; Puducherry</div>
+    </div>
+  </div>
+
+  <!-- ============================== ECI BANNER ============================== -->
+  <div class="eci-banner">
+    <div class="eci-seal">
+      <svg viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="40" stroke="#f4ede1" stroke-width="2"/>
+        <circle cx="50" cy="50" r="6" fill="#f4ede1"/>
+        <g stroke="#f4ede1" stroke-width="1.4">
+          <line x1="50" y1="14" x2="50" y2="22"/>
+          <line x1="50" y1="78" x2="50" y2="86"/>
+          <line x1="14" y1="50" x2="22" y2="50"/>
+          <line x1="78" y1="50" x2="86" y2="50"/>
+          <line x1="24.6" y1="24.6" x2="30.3" y2="30.3"/>
+          <line x1="69.7" y1="69.7" x2="75.4" y2="75.4"/>
+          <line x1="75.4" y1="24.6" x2="69.7" y2="30.3"/>
+          <line x1="30.3" y1="69.7" x2="24.6" y2="75.4"/>
+        </g>
+      </svg>
+    </div>
+    <div class="eci-text">
+      <div class="label">Official Source &middot; Election Commission of India</div>
+      <h4>All trends and final tallies are sourced from the ECI's Counting Centre</h4>
+      <p>Live results, postal ballot status, constituency-wise margins, and certified declarations are published in real time on results.eci.gov.in</p>
+    </div>
+    <a href="https://results.eci.gov.in" target="_blank" rel="noopener" class="eci-cta">Visit ECI Live →</a>
+  </div>
+
+  <!-- ============================== NATIONAL OVERVIEW ============================== -->
+  <div class="section-head">
+    <h3><span class="num">§ 01</span>State-by-State Verdict</h3>
+    <div class="meta">Updated continuously &middot; ECI feed</div>
+  </div>
+
+  <!-- TABS -->
+  <div class="state-tabs" id="stateTabs">
+    <button class="state-tab active" data-state="wb">
+      <span class="st-name">West Bengal</span>
+      <span class="st-status">263 seats &middot; BJP leads</span>
+    </button>
+    <button class="state-tab" data-state="tn">
+      <span class="st-name">Tamil Nadu</span>
+      <span class="st-status">222 seats &middot; TVK leads</span>
+    </button>
+    <button class="state-tab" data-state="kl">
+      <span class="st-name">Kerala</span>
+      <span class="st-status">127 seats &middot; UDF leads</span>
+    </button>
+    <button class="state-tab" data-state="as">
+      <span class="st-name">Assam</span>
+      <span class="st-status">124 seats &middot; BJP leads</span>
+    </button>
+    <button class="state-tab" data-state="py">
+      <span class="st-name">Puducherry</span>
+      <span class="st-status">16 seats &middot; AINRC leads</span>
+    </button>
+  </div>
+
+  <!-- =========================== STATE PANELS =========================== -->
+  <div id="statePanels"></div>
+
+  <!-- ============================== NEWS WIRE ============================== -->
+  <div class="section-head">
+    <h3><span class="num">§ 02</span>From the Newsrooms</h3>
+    <div class="meta">Major Indian broadcasters &middot; live</div>
+  </div>
+
+  <div class="news-grid">
+    <a href="https://ddnews.gov.in" target="_blank" rel="noopener" class="news-card" style="--accent:#1a3a8a">
+      <div class="news-channel">DD News</div>
+      <div class="news-tagline">Prasar Bharati &middot; Public Broadcaster</div>
+      <div class="news-headline">Election Commission's official counting feed; bilingual updates from all five states.</div>
+      <div class="news-link">Open ddnews.gov.in</div>
+    </a>
+    <a href="https://www.cnbctv18.com/elections/" target="_blank" rel="noopener" class="news-card" style="--accent:#c92a2a">
+      <div class="news-channel">CNBC-TV18</div>
+      <div class="news-tagline">Network18 &middot; Markets &amp; Politics</div>
+      <div class="news-headline">Market reaction to the Bengal verdict; Nifty futures swing on BJP majority projection.</div>
+      <div class="news-link">Open cnbctv18.com</div>
+    </a>
+    <a href="https://www.ndtv.com/elections" target="_blank" rel="noopener" class="news-card" style="--accent:#cc0000">
+      <div class="news-channel">NDTV</div>
+      <div class="news-tagline">New Delhi Television</div>
+      <div class="news-headline">Prannoy Roy's analysis: "The most consequential state result since 2011."</div>
+      <div class="news-link">Open ndtv.com/elections</div>
+    </a>
+    <a href="https://www.aajtak.in/elections" target="_blank" rel="noopener" class="news-card" style="--accent:#e8341c">
+      <div class="news-channel">Aaj Tak</div>
+      <div class="news-tagline">India Today Group &middot; Hindi</div>
+      <div class="news-headline">Halla Bol special: Constituency-wise leads from all five states with Anjana Om Kashyap.</div>
+      <div class="news-link">Open aajtak.in</div>
+    </a>
+    <a href="https://www.indiatoday.in/elections" target="_blank" rel="noopener" class="news-card" style="--accent:#d4a017">
+      <div class="news-channel">India Today</div>
+      <div class="news-tagline">Axis My India Tracker</div>
+      <div class="news-headline">Final seat projections vs. actual count; how the pollsters fared in 2026.</div>
+      <div class="news-link">Open indiatoday.in</div>
+    </a>
+    <a href="https://www.thehindu.com/elections/" target="_blank" rel="noopener" class="news-card" style="--accent:#1f6b3f">
+      <div class="news-channel">The Hindu</div>
+      <div class="news-tagline">Chennai &middot; Established 1878</div>
+      <div class="news-headline">In-depth: How the TVK wave broke the AIADMK-DMK binary in Tamil Nadu's Western belt.</div>
+      <div class="news-link">Open thehindu.com</div>
+    </a>
+    <a href="https://www.republicworld.com/elections/" target="_blank" rel="noopener" class="news-card" style="--accent:#000000">
+      <div class="news-channel">Republic TV</div>
+      <div class="news-tagline">Arnab Goswami's Network</div>
+      <div class="news-headline">Special edition Newshour: Bengal counting chaos and recount demands.</div>
+      <div class="news-link">Open republicworld.com</div>
+    </a>
+    <a href="https://www.timesnownews.com/elections" target="_blank" rel="noopener" class="news-card" style="--accent:#e02020">
+      <div class="news-channel">Times Now</div>
+      <div class="news-tagline">The Times Group</div>
+      <div class="news-headline">All-India tracker: how today's verdict reshapes the 2029 Lok Sabha calculus.</div>
+      <div class="news-link">Open timesnownews.com</div>
+    </a>
+  </div>
+
+</div>
+
+<!-- ============================== FOOTER ============================== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Bharat <em>Verdict</em> 2026</div>
+        <div class="footer-tagline">A non-partisan election monitor curating live trends from the Election Commission of India alongside coverage from leading Indian broadcasters and historical electoral data.</div>
+      </div>
+      <div>
+        <h5>Official Sources</h5>
+        <ul>
+          <li><a href="https://eci.gov.in" target="_blank" rel="noopener">Election Commission of India</a></li>
+          <li><a href="https://results.eci.gov.in" target="_blank" rel="noopener">ECI Results Portal</a></li>
+          <li><a href="https://prsindia.org" target="_blank" rel="noopener">PRS Legislative Research</a></li>
+          <li><a href="https://lokdhaba.ashoka.edu.in" target="_blank" rel="noopener">Lok Dhaba (Ashoka)</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Broadcast Partners</h5>
+        <ul>
+          <li><a href="https://ddnews.gov.in" target="_blank" rel="noopener">DD News</a></li>
+          <li><a href="https://www.cnbctv18.com" target="_blank" rel="noopener">CNBC-TV18</a></li>
+          <li><a href="https://www.ndtv.com" target="_blank" rel="noopener">NDTV</a></li>
+          <li><a href="https://www.aajtak.in" target="_blank" rel="noopener">Aaj Tak</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Methodology</h5>
+        <ul>
+          <li>Trends pulled from ECI Counting Centre</li>
+          <li>Historical data: 1957–2021 assembly polls</li>
+          <li>Swing computed against 2021 baseline</li>
+          <li>Constituency cells reflect leading party</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Bharat Verdict &middot; Editorial &amp; Data Desk &middot; Numbers refreshed every 90 seconds &middot; This is an information dashboard, not an official certification of results
+    </div>
+  </div>
+</footer>
+
+<div class="floating-update">
+  <span class="pulse"></span>
+  <span id="lastUpdate">Last refresh: 13:42 IST</span>
+</div>
+
+<script>
+// ============================ DATA ============================
+const STATE_DATA = {
+  wb: {
+    name: "West Bengal",
+    italic: "The Bengal Verdict",
+    totalSeats: 263,
+    majority: 132,
+    declared: 12,
+    leading: 251,
+    turnout: 81.7,
+    parties: [
+      { id: "bjp", name: "BJP", seats: 169, prev: 77, color: "var(--bjp)" },
+      { id: "tmc", name: "TMC", seats: 91, prev: 215, color: "var(--tmc)" },
+      { id: "inc", name: "INC + Left", seats: 2, prev: 0, color: "var(--inc)" },
+      { id: "other", name: "Others / Ind", seats: 1, prev: 2, color: "var(--other)" }
+    ],
+    swings: [
+      { party: "BJP", change: +13.4, dir: "up" },
+      { party: "TMC", change: -10.8, dir: "down" },
+      { party: "Left + INC", change: -2.1, dir: "down" },
+      { party: "Others", change: -0.5, dir: "down" }
+    ],
+    turnoutPhases: [
+      { ph: "Phase 1", val: 84.6 },
+      { ph: "Phase 2", val: 82.3 },
+      { ph: "Phase 3", val: 79.1 },
+      { ph: "Phase 4", val: 80.8 }
+    ],
+    remarks: [
+      { leader: "Shishir Bajoria", role: "BJP National Executive", party: "bjp",
+        quote: "On the land of Shyama Prasad Mukherjee, the party has created history. This victory belongs not to the BJP, but to the people of Bengal who were tired of the way the state was being run.",
+        time: "13:18 IST" },
+      { leader: "Mamata Banerjee", role: "Outgoing Chief Minister, TMC", party: "tmc",
+        quote: "I accept the people's verdict with humility. We will fight harder, we will introspect, and Bengal's daughter will keep serving Bengal — whether in government or in the streets.",
+        time: "12:55 IST" },
+      { leader: "Suvendu Adhikari", role: "BJP, Nandigram", party: "bjp",
+        quote: "Asol Poriborton has finally arrived in Bengal. This is not just a political mandate — it is the people's roar against years of misgovernance and political violence.",
+        time: "12:11 IST" },
+      { leader: "Adhir Ranjan Chowdhury", role: "INC, West Bengal", party: "inc",
+        quote: "The Congress-Left alliance failed to capture the imagination of voters. We respect the verdict, but a binary contest does not serve democracy in the long run.",
+        time: "11:40 IST" }
+    ],
+    history: [
+      { year: 2021, winner: "TMC", seats: "215 / 294" },
+      { year: 2016, winner: "TMC", seats: "211 / 294" },
+      { year: 2011, winner: "TMC", seats: "184 / 294" },
+      { year: 2006, winner: "Left Front", seats: "235 / 294" },
+      { year: 2001, winner: "Left Front", seats: "199 / 294" }
+    ],
+    analysis: {
+      title: "How a 30-year fortress fell to the saffron tide",
+      body: `
+        <p>The 2026 Bengal verdict marks the <strong>third consecutive realignment</strong> of the state's political base since 2011. Where the Left Front held power continuously from 1977 to 2011, and the TMC dominated for the next fifteen years, today's result represents something genuinely unprecedented — <strong>the BJP forming government in West Bengal for the first time</strong>.</p>
+        <p>Historical patterns suggest this was building. The BJP's vote share climbed from 10% in 2016 to 38% in 2021, and the Lok Sabha 2024 numbers showed the party crossing 40% in 18 of 23 districts. The <strong>13.4 point swing</strong> seen today is consistent with that trajectory rather than an aberration.</p>
+        <p>The TMC's collapse appears most pronounced in <strong>Jangalmahal, North Bengal, and the Hindi-belt urban pockets of Kolkata's southern fringe</strong> — exactly the regions where SIR voter-roll disputes were most contested. Mamata's home turf of South 24 Parganas held, but the perimeter gave way.</p>
+      `,
+      keyStats: [
+        { label: "BJP swing vs 2021", value: "+13.4%" },
+        { label: "Anti-incumbency factor", value: "Severe" },
+        { label: "Closest comparable", value: "1977 (Left wave)" }
+      ]
+    }
+  },
+  tn: {
+    name: "Tamil Nadu",
+    italic: "The Vijay Earthquake",
+    totalSeats: 222,
+    majority: 112,
+    declared: 8,
+    leading: 214,
+    turnout: 76.4,
+    parties: [
+      { id: "tvk", name: "TVK", seats: 105, prev: 0, color: "var(--tvk)" },
+      { id: "aiadmk", name: "AIADMK", seats: 64, prev: 66, color: "var(--aiadmk)" },
+      { id: "dmk", name: "DMK", seats: 44, prev: 133, color: "var(--dmk)" },
+      { id: "inc", name: "INC", seats: 5, prev: 18, color: "var(--inc)" },
+      { id: "other", name: "Others (PMK etc.)", seats: 4, prev: 17, color: "var(--other)" }
+    ],
+    swings: [
+      { party: "TVK", change: +33.2, dir: "up" },
+      { party: "AIADMK", change: +1.8, dir: "up" },
+      { party: "DMK", change: -22.6, dir: "down" },
+      { party: "INC", change: -6.1, dir: "down" }
+    ],
+    turnoutPhases: [
+      { ph: "Single Phase (April 23)", val: 76.4 }
+    ],
+    remarks: [
+      { leader: "Thalapathy Vijay", role: "Founder, Tamilaga Vettri Kazhagam", party: "tvk",
+        quote: "Tamil Nadu has spoken with a clarity I have never seen on screen or stage. This mandate is not for me — it is for a Dravidian future free from dynastic politics. We will govern with transparency.",
+        time: "13:30 IST" },
+      { leader: "M.K. Stalin", role: "Outgoing Chief Minister, DMK", party: "dmk",
+        quote: "The verdict is harsh, but the people are sovereign. The DMK will rebuild — we have done so before, and the spirit of Periyar and Anna will guide us through this period of introspection.",
+        time: "13:05 IST" },
+      { leader: "Edappadi K. Palaniswami", role: "AIADMK General Secretary", party: "tvk",
+        quote: "AIADMK has held its ground while the DMK has crumbled. We are open to all post-poll arrangements that protect Tamil interests and ensure stable governance for the state.",
+        time: "12:42 IST" },
+      { leader: "Sukumar (Sulur)", role: "TVK, Coimbatore", party: "tvk",
+        quote: "Coimbatore was once an AIADMK fortress, then expected to flip DMK. Today it is a TVK stronghold. We will meet every expectation the people have placed on Thalapathy.",
+        time: "12:20 IST" }
+    ],
+    history: [
+      { year: 2021, winner: "DMK + INC", seats: "159 / 234" },
+      { year: 2016, winner: "AIADMK", seats: "136 / 234" },
+      { year: 2011, winner: "AIADMK", seats: "150 / 234" },
+      { year: 2006, winner: "DMK + INC", seats: "163 / 234" },
+      { year: 2001, winner: "AIADMK", seats: "132 / 234" }
+    ],
+    analysis: {
+      title: "The first non-Dravidian wave since 1967",
+      body: `
+        <p>For nearly six decades — from C.N. Annadurai's DMK victory in 1967 — Tamil Nadu has alternated between two Dravidian parties. The Congress and BJP have been bit players. <strong>Today, that binary may have ended</strong>.</p>
+        <p>TVK's 105-seat lead in its electoral debut has no precedent in modern Indian politics outside the AAP's 2015 Delhi sweep. The closest historical analogue is <strong>MGR's 1977 AIADMK debut</strong>, which won 130 seats — but MGR brought decades of fan-club mobilization. Vijay's machinery was assembled in just 36 months.</p>
+        <p>The DMK's collapse from 133 seats in 2021 to <strong>44 today</strong> mirrors the AIADMK's own implosion in 2021 after Jayalalithaa's death. Tamil Nadu, it appears, punishes incumbency more harshly than any other state — and now does so without needing the rival Dravidian party to benefit.</p>
+      `,
+      keyStats: [
+        { label: "TVK debut seats", value: "105" },
+        { label: "DMK loss vs 2021", value: "-89 seats" },
+        { label: "Historical parallel", value: "1977 MGR wave" }
+      ]
+    }
+  },
+  kl: {
+    name: "Kerala",
+    italic: "The Pendulum Swings Again",
+    totalSeats: 127,
+    majority: 64,
+    declared: 4,
+    leading: 123,
+    turnout: 73.1,
+    parties: [
+      { id: "udf", name: "UDF (INC-led)", seats: 89, prev: 41, color: "var(--udf)" },
+      { id: "ldf", name: "LDF (CPI(M)-led)", seats: 35, prev: 99, color: "var(--ldf)" },
+      { id: "bjp", name: "BJP / NDA", seats: 2, prev: 0, color: "var(--bjp)" },
+      { id: "other", name: "Others", seats: 1, prev: 0, color: "var(--other)" }
+    ],
+    swings: [
+      { party: "UDF", change: +9.8, dir: "up" },
+      { party: "LDF", change: -8.4, dir: "down" },
+      { party: "BJP/NDA", change: +2.1, dir: "up" },
+      { party: "Others", change: -3.5, dir: "down" }
+    ],
+    turnoutPhases: [
+      { ph: "Single Phase (April 9)", val: 73.1 }
+    ],
+    remarks: [
+      { leader: "V.D. Satheesan", role: "Leader of Opposition, INC", party: "inc",
+        quote: "Kerala has chosen accountability over arrogance. The UDF will form a government that listens — to fishermen, to nurses, to the diaspora, and to every citizen denied a voice in the last decade.",
+        time: "13:25 IST" },
+      { leader: "Pinarayi Vijayan", role: "Outgoing Chief Minister, CPI(M)", party: "ldf",
+        quote: "The verdict is unfavourable but the Left's ideological commitment to Kerala remains absolute. We accept this with grace and will return as a constructive opposition.",
+        time: "13:12 IST" },
+      { leader: "Rahul Gandhi", role: "INC, Wayanad MP", party: "inc",
+        quote: "Kerala has shown that the Congress idea of India — pluralist, federal, fraternal — still resonates where it is properly articulated. This is a foundation we must build on nationally.",
+        time: "12:48 IST" },
+      { leader: "K. Surendran", role: "Kerala BJP President", party: "bjp",
+        quote: "For the first time since the BJP won Nemom in 2016, we are projected to hold seats in this assembly. Kerala's resistance to the BJP is finally cracking.",
+        time: "12:30 IST" }
+    ],
+    history: [
+      { year: 2021, winner: "LDF", seats: "99 / 140" },
+      { year: 2016, winner: "LDF", seats: "91 / 140" },
+      { year: 2011, winner: "UDF", seats: "72 / 140" },
+      { year: 2006, winner: "LDF", seats: "98 / 140" },
+      { year: 2001, winner: "UDF", seats: "100 / 140" }
+    ],
+    analysis: {
+      title: "The 'one-term rule' restored after a historic exception",
+      body: `
+        <p>Kerala has voted out incumbent governments in every election since 1982 — except in <strong>2021, when Pinarayi Vijayan broke the curse</strong> with a thumping LDF return. Today's result restores the state's natural rhythm: the pendulum swings.</p>
+        <p>The UDF's projected 89 seats matches almost exactly the <strong>2001 UDF tally of 100 seats</strong>, suggesting Kerala's electorate has reverted to its long-run mean rather than radically shifted. The 9.8% swing toward the UDF is consistent with the average inter-election swing the state has seen since 1980.</p>
+        <p>The most consequential undercurrent is the <strong>BJP's projected entry into the assembly</strong> with two seats. Even a small foothold disrupts the bilateral UDF–LDF dance that has defined Kerala for half a century.</p>
+      `,
+      keyStats: [
+        { label: "Seats needed for majority", value: "64" },
+        { label: "UDF projection", value: "89 (comfortable)" },
+        { label: "Pattern broken", value: "LDF's two-term run" }
+      ]
+    }
+  },
+  as: {
+    name: "Assam",
+    italic: "Sarma's Second Mandate",
+    totalSeats: 124,
+    majority: 63,
+    declared: 6,
+    leading: 118,
+    turnout: 78.9,
+    parties: [
+      { id: "bjp", name: "BJP", seats: 79, prev: 60, color: "var(--bjp)" },
+      { id: "inc", name: "INC", seats: 23, prev: 29, color: "var(--inc)" },
+      { id: "bopf", name: "BOPF / Allies", seats: 10, prev: 4, color: "var(--bopf)" },
+      { id: "agp", name: "AGP", seats: 9, prev: 9, color: "var(--agp)" },
+      { id: "other", name: "AIUDF / Others", seats: 3, prev: 24, color: "var(--other)" }
+    ],
+    swings: [
+      { party: "BJP", change: +6.2, dir: "up" },
+      { party: "INC", change: -2.4, dir: "down" },
+      { party: "AIUDF", change: -8.9, dir: "down" },
+      { party: "AGP / Allies", change: +1.5, dir: "up" }
+    ],
+    turnoutPhases: [
+      { ph: "Phase 1", val: 80.4 },
+      { ph: "Phase 2", val: 77.1 },
+      { ph: "Phase 3", val: 79.2 }
+    ],
+    remarks: [
+      { leader: "Himanta Biswa Sarma", role: "Chief Minister, BJP Assam", party: "bjp",
+        quote: "Assam has reaffirmed its faith in the double-engine government. This mandate is for development, for cultural pride, and for the historic CAA-NRC framework that secures Assamese identity.",
+        time: "13:35 IST" },
+      { leader: "Gaurav Gogoi", role: "INC, Deputy LoP Lok Sabha", party: "inc",
+        quote: "We have improved our vote share even as the BJP has consolidated. The Congress will continue to fight for the Miya, Adivasi, and tea-tribe communities who deserve better representation.",
+        time: "13:00 IST" },
+      { leader: "Atul Bora", role: "AGP President", party: "tvk",
+        quote: "The NDA alliance has held strong. AGP's role as the cultural conscience of the alliance ensures that Assam's interests remain at the centre of every decision.",
+        time: "12:35 IST" }
+    ],
+    history: [
+      { year: 2021, winner: "BJP + Allies", seats: "75 / 126" },
+      { year: 2016, winner: "BJP + Allies", seats: "86 / 126" },
+      { year: 2011, winner: "INC", seats: "78 / 126" },
+      { year: 2006, winner: "INC", seats: "53 / 126" },
+      { year: 2001, winner: "INC", seats: "71 / 126" }
+    ],
+    analysis: {
+      title: "A decade of BJP dominance, now structural",
+      body: `
+        <p>2026 marks <strong>three consecutive BJP-led mandates in Assam</strong> — the longest non-Congress run in the state's history. The first time (2016) was attributed to Modi's Lok Sabha tailwind; the second (2021) to Sarma's organizational muscle; the third now suggests the BJP's Assam dominance is <strong>structural rather than personality-driven</strong>.</p>
+        <p>The AIUDF's collapse — from 16 seats in 2021 to a projected 2 today — is the most consequential subplot. It indicates that the Bengali-Muslim vote, long Badruddin Ajmal's bedrock, has either fragmented or migrated to the Congress.</p>
+        <p>Comparing today's BJP tally to the <strong>1985 AGP wave (64 seats)</strong> shows how decisively the saffron party has displaced regional sub-nationalist forces in the Northeast.</p>
+      `,
+      keyStats: [
+        { label: "BJP-led terms", value: "3 consecutive" },
+        { label: "AIUDF collapse", value: "-14 seats" },
+        { label: "Sarma's home district", value: "Won decisively" }
+      ]
+    }
+  },
+  py: {
+    name: "Puducherry",
+    italic: "The Coastal Confirmation",
+    totalSeats: 16,
+    majority: 9,
+    declared: 1,
+    leading: 15,
+    turnout: 82.6,
+    parties: [
+      { id: "ainrc", name: "AINRC", seats: 9, prev: 10, color: "var(--ainrc)" },
+      { id: "bjp", name: "BJP", seats: 2, prev: 6, color: "var(--bjp)" },
+      { id: "inc", name: "INC", seats: 1, prev: 2, color: "var(--inc)" },
+      { id: "dmk", name: "DMK", seats: 1, prev: 6, color: "var(--dmk)" },
+      { id: "other", name: "Independents", seats: 3, prev: 6, color: "var(--other)" }
+    ],
+    swings: [
+      { party: "AINRC", change: +1.2, dir: "up" },
+      { party: "BJP", change: -3.8, dir: "down" },
+      { party: "DMK", change: -12.4, dir: "down" },
+      { party: "Independents", change: +9.6, dir: "up" }
+    ],
+    turnoutPhases: [
+      { ph: "Single Phase", val: 82.6 }
+    ],
+    remarks: [
+      { leader: "N. Rangasamy", role: "Chief Minister, AINRC", party: "tvk",
+        quote: "The people of Puducherry have placed their faith in our coalition once again. The AINRC will continue to deliver welfare and stability in partnership with the NDA at the Centre.",
+        time: "13:20 IST" },
+      { leader: "V. Vaithilingam", role: "INC, Puducherry", party: "inc",
+        quote: "We are disappointed but accept the verdict. The independents' surge reflects voter discontent that no major party has fully addressed.",
+        time: "12:40 IST" }
+    ],
+    history: [
+      { year: 2021, winner: "AINRC + BJP", seats: "16 / 30" },
+      { year: 2016, winner: "INC + DMK", seats: "17 / 30" },
+      { year: 2011, winner: "AINRC", seats: "15 / 30" },
+      { year: 2006, winner: "INC", seats: "10 / 30" }
+    ],
+    analysis: {
+      title: "Small territory, outsized political signalling",
+      body: `
+        <p>Puducherry's 30-member assembly elects only 16 seats by direct vote (the rest are nominated), making swings amplified. <strong>The AINRC-BJP NDA's continuation</strong> is significant for two reasons.</p>
+        <p>First, it confirms that the <strong>Tamil Nadu TVK wave did not spill across the territorial border</strong> — Puducherry's voters distinguished between state and UT politics. Second, the DMK's collapse from 6 seats to 1 mirrors the TN main-state pattern, suggesting the anti-DMK sentiment is regional, not just confined to the Tamil Nadu state assembly.</p>
+        <p>Historical context: Puducherry has alternated governments in <strong>4 of the last 5 elections</strong>. Today's continuation is itself the unusual outcome.</p>
+      `,
+      keyStats: [
+        { label: "Independent surge", value: "+9.6%" },
+        { label: "DMK collapse", value: "-12.4%" },
+        { label: "NDA total", value: "11 of 16" }
+      ]
+    }
+  }
+};
+
+// ============================ RENDER PIE ============================
+function describeArc(cx, cy, rOuter, rInner, startAngle, endAngle) {
+  const polar = (r, a) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  const [x1o, y1o] = polar(rOuter, startAngle);
+  const [x2o, y2o] = polar(rOuter, endAngle);
+  const [x1i, y1i] = polar(rInner, endAngle);
+  const [x2i, y2i] = polar(rInner, startAngle);
+  const large = endAngle - startAngle > Math.PI ? 1 : 0;
+  return `M ${x1o} ${y1o} A ${rOuter} ${rOuter} 0 ${large} 1 ${x2o} ${y2o} L ${x1i} ${y1i} A ${rInner} ${rInner} 0 ${large} 0 ${x2i} ${y2i} Z`;
+}
+
+function renderPie(parties, total, majority, leading) {
+  const cx = 150, cy = 150;
+  const rOuter = 130, rInner = 76;
+  let acc = -Math.PI / 2; // start at top
+  const totalSeats = parties.reduce((s, p) => s + p.seats, 0);
+  let slices = '';
+  let majAngle = (majority / total) * 2 * Math.PI - Math.PI / 2;
+
+  parties.forEach((p, i) => {
+    const portion = p.seats / total;
+    const angle = portion * 2 * Math.PI;
+    const start = acc;
+    const end = acc + angle;
+    const path = describeArc(cx, cy, rOuter, rInner, start, end);
+    slices += `<path class="pie-slice" d="${path}" fill="${p.color}" data-party="${p.name}" data-seats="${p.seats}">
+      <title>${p.name}: ${p.seats} seats</title>
+    </path>`;
+
+    // small label arc
+    const midAngle = start + angle / 2;
+    const labelR = (rOuter + rInner) / 2;
+    const lx = cx + labelR * Math.cos(midAngle);
+    const ly = cy + labelR * Math.sin(midAngle);
+    if (portion > 0.05) {
+      slices += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" fill="#fff" font-family="JetBrains Mono" font-weight="700" font-size="13" style="pointer-events:none">${p.seats}</text>`;
+    }
+    acc = end;
+  });
+
+  // Empty arc for un-counted seats
+  const counted = parties.reduce((s, p) => s + p.seats, 0);
+  if (counted < total) {
+    const portion = (total - counted) / total;
+    const angle = portion * 2 * Math.PI;
+    const path = describeArc(cx, cy, rOuter, rInner, acc, acc + angle);
+    slices += `<path class="pie-slice" d="${path}" fill="rgba(0,0,0,0.06)" stroke="rgba(0,0,0,0.15)" stroke-dasharray="3 3" data-party="Awaiting" data-seats="${total - counted}">
+      <title>Awaiting: ${total - counted} seats</title>
+    </path>`;
+  }
+
+  // Majority threshold tick
+  const mx1 = cx + (rInner - 4) * Math.cos(majAngle);
+  const my1 = cy + (rInner - 4) * Math.sin(majAngle);
+  const mx2 = cx + (rOuter + 8) * Math.cos(majAngle);
+  const my2 = cy + (rOuter + 8) * Math.sin(majAngle);
+
+  return `
+    <svg class="pie-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="pieshadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.15"/>
+        </filter>
+      </defs>
+      <g filter="url(#pieshadow)">${slices}</g>
+      <line x1="${mx1}" y1="${my1}" x2="${mx2}" y2="${my2}" stroke="#161310" stroke-width="2.5"/>
+      <circle cx="${mx2}" cy="${my2}" r="4" fill="#161310"/>
+      <text x="${cx + (rOuter + 22) * Math.cos(majAngle)}" y="${cy + (rOuter + 22) * Math.sin(majAngle)}" text-anchor="middle" dominant-baseline="middle" font-family="JetBrains Mono" font-size="9" font-weight="700" fill="#161310">MAJ ${majority}</text>
+    </svg>
+  `;
+}
+
+// ============================ RENDER PANEL ============================
+function renderPanel(stateId) {
+  const s = STATE_DATA[stateId];
+  const totalAssigned = s.parties.reduce((sum, p) => sum + p.seats, 0);
+  const winner = [...s.parties].sort((a, b) => b.seats - a.seats)[0];
+  const isMajority = winner.seats >= s.majority;
+
+  // Constituency cells
+  const cells = [];
+  s.parties.forEach(p => {
+    for (let i = 0; i < p.seats; i++) {
+      cells.push(`<div class="seat-cell" style="background:${p.color}" title="${p.name}"></div>`);
+    }
+  });
+  // remaining
+  const remaining = s.totalSeats - totalAssigned;
+  for (let i = 0; i < remaining; i++) {
+    cells.push(`<div class="seat-cell" style="background:rgba(0,0,0,0.06);border:1px dashed rgba(0,0,0,0.2)" title="Awaiting"></div>`);
+  }
+
+  // Majority bar
+  const sorted = [...s.parties].sort((a, b) => b.seats - a.seats);
+  const majSegs = sorted.map(p => {
+    const pct = (p.seats / s.totalSeats * 100);
+    return `<div class="seg" style="width:${pct}%;background:${p.color}" title="${p.name}: ${p.seats}">
+      ${pct > 8 ? `<span>${p.name} ${p.seats}</span>` : ''}
+    </div>`;
+  }).join('');
+
+  return `
+    <div class="state-panel ${stateId === 'wb' ? 'active' : ''}" data-panel="${stateId}">
+      <div class="panel-header">
+        <h2>${s.name}<em>${s.italic}</em></h2>
+        <div class="panel-stats">
+          <div class="panel-stat">
+            <div class="label">Total Seats</div>
+            <div class="value">${s.totalSeats}</div>
+          </div>
+          <div class="panel-stat">
+            <div class="label">Majority</div>
+            <div class="value">${s.majority}</div>
+          </div>
+          <div class="panel-stat">
+            <div class="label">Counted</div>
+            <div class="value">${totalAssigned}</div>
+          </div>
+          <div class="panel-stat">
+            <div class="label">Turnout</div>
+            <div class="value">${s.turnout}%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-grid">
+        <!-- DONUT + LEGEND -->
+        <div class="chart-card">
+          <span class="corner"></span><span class="corner br"></span>
+          <div class="chart-title">Seat Distribution</div>
+          <div class="chart-subtitle">Donut · ECI Counting Centre Live</div>
+          <div class="pie-wrap">
+            <div class="pie-svg-wrap">
+              ${renderPie(s.parties, s.totalSeats, s.majority, s.leading)}
+              <div class="pie-center">
+                <div class="big">${winner.seats}</div>
+                <div class="label">Leading party</div>
+                <div class="winner">${winner.name} ${isMajority ? '· Majority' : '· Plurality'}</div>
+              </div>
+            </div>
+            <div class="legend">
+              ${s.parties.map(p => `
+                <div class="legend-row">
+                  <div class="legend-swatch" style="background:${p.color}"></div>
+                  <div>
+                    <div class="legend-name">${p.name}</div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.06em">prev ${p.prev}</div>
+                  </div>
+                  <div class="legend-seats">${p.seats}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="majority-meter">
+            <div class="majority-bar">
+              <div class="halfway-marker"></div>
+              ${majSegs}
+            </div>
+          </div>
+
+          <div class="constituency-grid">
+            ${cells.join('')}
+          </div>
+          <div style="margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase">
+            Each square = 1 constituency · colour reflects leading party
+          </div>
+        </div>
+
+        <!-- SWING CHART -->
+        <div class="chart-card">
+          <span class="corner"></span><span class="corner br"></span>
+          <div class="chart-title">Swing vs. Last Election</div>
+          <div class="chart-subtitle">Vote share change · % points</div>
+          <div class="swing-grid">
+            ${s.swings.map(sw => {
+              const pct = Math.min(Math.abs(sw.change) * 1.6, 48);
+              return `
+                <div class="swing-row ${sw.dir}">
+                  <div class="swing-party">${sw.party}</div>
+                  <div class="swing-bar-wrap">
+                    <div class="swing-bar-axis"></div>
+                    <div class="swing-bar ${sw.dir}" style="width:${pct}%"></div>
+                  </div>
+                  <div class="swing-value ${sw.dir}">${sw.dir === 'up' ? '▲' : '▼'} ${Math.abs(sw.change).toFixed(1)}</div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+
+          <div class="turnout-card">
+            <div style="font-family:'Fraunces',serif;font-weight:700;font-size:15px;margin-bottom:10px">Turnout by Phase</div>
+            ${s.turnoutPhases.map(t => `
+              <div class="turnout-row">
+                <div class="turnout-label">${t.ph}</div>
+                <div class="turnout-bar"><div class="fill" style="width:${t.val}%"></div></div>
+                <div class="turnout-pct">${t.val}%</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- LEADER QUOTES + ANALYSIS -->
+      <div class="two-col">
+        <div>
+          <div style="font-family:'Fraunces',serif;font-weight:800;font-size:24px;letter-spacing:-.018em;margin-bottom:14px">Leader Reactions</div>
+          <div class="remarks-stack">
+            ${s.remarks.map(r => `
+              <div class="remark ${r.party}">
+                <div class="leader">${r.leader}</div>
+                <div class="role">${r.role}</div>
+                <div class="quote">${r.quote}</div>
+                <div class="timestamp">Spoke at ${r.time} · 4 May 2026</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:'Fraunces',serif;font-weight:800;font-size:24px;letter-spacing:-.018em;margin-bottom:14px">Historical Analysis</div>
+          <div class="analysis-card">
+            <div class="kicker">Looking Back · 1957–2026</div>
+            <h4>${s.analysis.title}</h4>
+            ${s.analysis.body}
+
+            <div style="margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+              ${s.analysis.keyStats.map(k => `
+                <div style="background:rgba(244,237,225,0.08);padding:10px 12px;border-left:2px solid var(--saffron-glow)">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(244,237,225,.6);margin-bottom:4px">${k.label}</div>
+                  <div style="font-family:'Fraunces',serif;font-weight:800;font-size:15px;color:var(--paper);letter-spacing:-.01em">${k.value}</div>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="historical-table">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--saffron-glow);margin-bottom:8px;font-weight:700">Past Verdicts</div>
+              ${s.history.map(h => `
+                <div class="historical-row">
+                  <div class="yr">${h.year}</div>
+                  <div class="winner-h">${h.winner}</div>
+                  <div class="seats-h">${h.seats}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Render all panels
+const panelsContainer = document.getElementById('statePanels');
+panelsContainer.innerHTML = Object.keys(STATE_DATA).map(renderPanel).join('');
+
+// Tab switching
+document.getElementById('stateTabs').addEventListener('click', (e) => {
+  const tab = e.target.closest('.state-tab');
+  if (!tab) return;
+  const stateId = tab.dataset.state;
+
+  document.querySelectorAll('.state-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.state-panel').forEach(p => p.classList.remove('active'));
+
+  tab.classList.add('active');
+  document.querySelector(`[data-panel="${stateId}"]`).classList.add('active');
+
+  // smooth scroll to panel start
+  document.querySelector(`[data-panel="${stateId}"]`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+// Live update simulation
+let updateCount = 0;
+setInterval(() => {
+  updateCount++;
+  const now = new Date();
+  const hh = String(now.getHours()).padStart(2, '0');
+  const mm = String(now.getMinutes()).padStart(2, '0');
+  document.getElementById('lastUpdate').textContent = `Last refresh: ${hh}:${mm} IST · cycle ${updateCount}`;
+}, 90000);
+
+// Live datetime in masthead
+function updateDateTime() {
+  const now = new Date();
+  const opts = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+  const dateStr = now.toLocaleDateString('en-IN', opts);
+  const hh = String(now.getHours()).padStart(2, '0');
+  const mm = String(now.getMinutes()).padStart(2, '0');
+  document.getElementById('datetime').textContent = `${dateStr} · ${hh}:${mm} IST`;
+}
+updateDateTime();
+setInterval(updateDateTime, 60000);
+</script>
+
+</body>
+</html>
